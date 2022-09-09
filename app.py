@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 import util
+from collections.abc import Mapping
 app=Flask(__name__)
 
 @app.route('/')
