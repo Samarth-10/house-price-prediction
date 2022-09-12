@@ -28,13 +28,11 @@ def load_saved_artifacts():
     global __locations
     global __data_columns
 
-    with open("columns.json",'r') as f:
-        __data_columns=json.load(f)['data_columns']
-        __locations=__data_columns[3:]
+    __data_columns=json.load(open("columns.json",'r'))['data_columns']
+    __locations=__data_columns[3:]
 
     global __model
-    with open("banglore_home_prices_model.pickle",'rb') as f:
-        __model=pickle.load(f)
+    __model=pickle.load(open("banglore_home_prices_model.pickle",'rb'))
 
     print("Done loading artifacts")
     
