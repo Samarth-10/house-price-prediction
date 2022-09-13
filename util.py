@@ -12,6 +12,7 @@ def get_location_names():
     return __locations
 
 def get_estimated_price(location,sqft,bhk,bath):
+    __model=pickle.load(open("banglore_home_prices_model.pickle",'rb'))
     try:
         loc_index=__data_columns.index(location=lower())
     except:
