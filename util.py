@@ -7,6 +7,8 @@ __data_columns=None
 __model=None
 
 def get_location_names():
+    __data_columns=json.load(open("columns.json",'r'))['data_columns']
+    __locations=__data_columns[3:]
     return __locations
 
 def get_estimated_price(location,sqft,bhk,bath):
