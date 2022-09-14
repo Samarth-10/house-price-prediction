@@ -5,6 +5,21 @@ from collections.abc import MutableMapping
 from collections.abc import Sequence
 app=Flask(__name__)
 
+def get_estimated_price(location,sqft,bhk,bath):
+    __model=pickle.load(open("banglore_home_prices_model.pickle",'rb'))
+    try:
+        loc_index=__data_columns.index(location=lower())
+    except:
+        loc_index=-1
+    
+    x = np.zeros(len(__data_columns))
+    x[0] = sqft
+    x[1] = bath
+    x[2] = bhk
+    if loc_index >= 0:
+        x[loc_index] = 1
+    return round(__model.predict([x])[0],2)
+
 @app.route('/')
 def hello():
     return render_template("app.html")
@@ -25,7 +40,7 @@ def predict_home_price():
     bath = int(request.form['bath'])
 
     response = jsonify({
-        'estimated_price': util.get_estimated_price(location,total_sqft,bhk,bath)
+        'estimated_price':get_estimated_price(location,total_sqft,bhk,bath)
     })
     response.headers.add('Access-Control-Allow-Origin', '*')
 
@@ -34,4 +49,4 @@ def predict_home_price():
 if __name__ == "__main__":
     print("Starting Python Flask Server For Home Price Prediction...")
     util.load_saved_artifacts()
-    app.run()
+    app.run(debug=True)
