@@ -8,6 +8,7 @@ from collections.abc import Sequence
 app=Flask(__name__)
 
 def get_estimated_price(location,sqft,bhk,bath):
+    __data_columns=json.load(open("columns.json",'r'))['data_columns']
     __model=pickle.load(open("banglore_home_prices_model.pickle",'rb'))
     try:
         loc_index=__data_columns.index(location=lower())
